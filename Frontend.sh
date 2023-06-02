@@ -1,5 +1,5 @@
-echo -e "\[33m Installing Niginx server \e[0m"
-echo -e "\[33mInstalling Niginx server withouspace\e[0m"
+echo -e "\e[33m Installing Niginx server \e[0m"
+echo -e "\e[33mInstalling Niginx server withouspace\e[0m"
 yum install nginx -y
 
 rm -rf /usr/share/nginx/html/*
