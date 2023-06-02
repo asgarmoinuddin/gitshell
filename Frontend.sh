@@ -9,8 +9,9 @@ curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.z
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip >>/tmp/nginx.log
 
-#config file
-#test
+echo -e "\e[31m update config file \e[0m"
+cp roboshop.conf /etc/nginx/default/roboshop.conf
+
 echo -e "\e[31m Restarting Service \e[0m"
 systemctl enable nginx &>>/tmp/nginx.log
 systemctl restart nginx &>>/tmp/nginx.log
