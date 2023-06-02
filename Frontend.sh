@@ -8,6 +8,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 
 #config file
+#test
 
 systemctl enable nginx
 systemctl restart nginx
