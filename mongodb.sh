@@ -4,6 +4,9 @@ cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>>/tmp/mongo.log
 echo -e "\e[33m installing mongodb \e[0m"
 yum install mongodb-org -y &>>/tmp/mongo.log
 
+echo -e "\e[33m modifying ip address\e[0m"
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>/tmp/mongo.log
+
 echo -e "\e[33m start Service \e[0m"
 systemctl enable mongod &>>/tmp/mongo.log
 systemctl restart mongod &>>/tmp/mongo.log
