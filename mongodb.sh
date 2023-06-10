@@ -1,12 +1,16 @@
-echo -e "\e[33m Copy Repo file \e[0m"
-cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>>/tmp/mongo.log
+source common.sh
+component=mongodb
 
-echo -e "\e[33m installing mongodb \e[0m"
-yum install mongodb-org -y &>>/tmp/mongo.log
 
-echo -e "\e[33m modifying ip address\e[0m"
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>/tmp/mongo.log
+echo -e "${color} Copy Repo file ${coloroff}"
+cp ${component}.repo /etc/yum.repos.d/${component}.repo &>>$log_file
 
-echo -e "\e[33m start Service \e[0m"
-systemctl enable mongod &>>/tmp/mongo.log
-systemctl restart mongod &>>/tmp/mongo.log
+echo -e "${color} installing ${component} ${coloroff}"
+yum install ${component}-org -y &>>$log_file
+
+echo -e "${color} modifying ip address${coloroff}"
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>$log_file
+
+echo -e "${color} start Service ${coloroff}"
+systemctl enable mongod &>>$log_file
+systemctl restart mongod &>>$log_file
