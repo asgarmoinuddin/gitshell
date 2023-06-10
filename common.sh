@@ -5,69 +5,69 @@ log_file="/tmp/roboshop.log"
 install_nginx(){
 
   echo -e "${color} Installing Niginx server ${coloroff}"
-  yum install ${component} -y >>$log_file
+  yum install ${component} -y &>>${log_file}
 
   echo -e "${color} Restarting Service ${coloroff}"
-    systemctl enable ${component} &>>$log_file
-    systemctl restart ${component} &>>$log_file
+    systemctl enable ${component} &>>${log_file}
+    systemctl restart ${component} &>>${log_file}
 
   echo -e "${color} Removing Default Content ${coloroff}"
-  rm -rf /usr/share/${component}/html/* >>$log_file
+  rm -rf /usr/share/${component}/html/* &>>${log_file}
 
   echo -e "${color} Downloading and extracting content ${coloroff}"
-  curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>$log_file
+  curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${log_file}
   cd /usr/share/${component}/html
-  unzip /tmp/frontend.zip >>$log_file
+  unzip /tmp/frontend.zip &>>${log_file}
 
   echo -e "${color} update config file ${coloroff}"
   cp /root/gitshell/roboshop.conf /etc/${component}/default.d/roboshop.conf
 
   echo -e "${color} Restarting Service ${coloroff}"
-  systemctl restart ${component} &>>$log_file
+  systemctl restart ${component} &>>${log_file}
 }
 
 service_start(){
   echo -e "${color} reloading daemon ${coloroff}"
-    systemctl daemon-reload &>>$log_file
+    systemctl daemon-reload &>>${log_file}
 
     echo -e "${color} starting service ${coloroff}"
-    systemctl enable $component &>>$log_file
-    systemctl restart $component &>>$log_file
+    systemctl enable $component &>>${log_file}
+    systemctl restart $component &>>${log_file}
 }
 
 nodejs(){
   echo -e "${color} installing nodejs rpm ${coloroff}"
-  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
-  yum install nodejs -y &>>$log_file
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+  yum install nodejs -y &>>${log_file}
 
   echo -e "${color} adding user ${coloroff}"
-  useradd roboshop &>>$log_file
+  useradd roboshop &>>${log_file}
   echo -e "${color} creating app directory ${coloroff}"
-  mkdir /app &>>$log_file
+  mkdir /app &>>${log_file}
 
   echo -e "${color} downloading $component file and unzipping ${coloroff}"
 
-  curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip  &>>$log_file
+  curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip  &>>${log_file}
   cd /app
-  unzip /tmp/$component.zip  &>>$log_file
+  unzip /tmp/$component.zip  &>>${log_file}
   echo -e "${color} install nodejs dependencies ${coloroff}"
-  npm install &>>$log_file
+  npm install &>>${log_file}
 
   echo -e "${color} creating $component service file ${coloroff}"
-  cp $component.service /etc/systemd/system/$component.service &>>$log_file
+  cp $component.service /etc/systemd/system/$component.service &>>${log_file}
 
 
 }
 
 mongo_schema_setup(){
   echo -e "${color} creating mongo repo ${coloroff}"
-  cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>>$log_file
+  cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
 
   echo -e "${color} installing mongo ${coloroff}"
-  yum install mongodb-org-shell -y &>>$log_file
+  yum install mongodb-org-shell -y &>>${log_file}
 
   echo -e "${color} copying schema in mongodb ${coloroff}"
-  mongo --host mongodb-dev.cartrackcardecors.store </app/schema/${component}.js &>>$log_file
+  mongo --host mongodb-dev.cartrackcardecors.store </app/schema/${component}.js &>>${log_file}
 }
 
 user_add(){
