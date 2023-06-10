@@ -1,5 +1,5 @@
 source common.sh
 
-component=nginx
+component="nginx"
 
 install_nignx
