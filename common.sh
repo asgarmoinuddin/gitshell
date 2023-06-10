@@ -16,7 +16,7 @@ install_nginx(){
   unzip /tmp/frontend.zip >>$log_file
 
   echo -e "${color} update config file ${coloroff}"
-  cp /root/gitshell/roboshop.conf /etc/${component}/default/roboshop.conf
+  cp /root/gitshell/roboshop.conf /etc/${component}/default.d/roboshop.conf
 
   echo -e "${color} Restarting Service ${coloroff}"
   systemctl enable ${component} &>>$log_file
