@@ -5,22 +5,22 @@ log_file="/tmp/roboshop.log"
 install_nginx(){
 
   echo -e "${color} Installing Niginx server ${coloroff}"
-  yum install ${componnet} -y >>$log_file
+  yum install ${component} -y >>$log_file
 
   echo -e "${color} Removing Default Content ${coloroff}"
-  rm -rf /usr/share/${componnet}/html/* >>$log_file
+  rm -rf /usr/share/${component}/html/* >>$log_file
 
   echo -e "${color} Downloading and extracting content ${coloroff}"
   curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>$log_file
-  cd /usr/share/${componnet}/html
+  cd /usr/share/${component}/html
   unzip /tmp/frontend.zip >>$log_file
 
   echo -e "${color} update config file ${coloroff}"
-  cp roboshop.conf /etc/${componnet}/default/roboshop.conf
+  cp roboshop.conf /etc/${component}/default/roboshop.conf
 
   echo -e "${color} Restarting Service ${coloroff}"
-  systemctl enable ${componnet} &>>$log_file
-  systemctl restart ${componnet} &>>$log_file
+  systemctl enable ${component} &>>$log_file
+  systemctl restart ${component} &>>$log_file
 }
 
 service_start(){
