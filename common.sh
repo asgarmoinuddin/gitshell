@@ -7,6 +7,10 @@ install_nginx(){
   echo -e "${color} Installing Niginx server ${coloroff}"
   yum install ${component} -y >>$log_file
 
+  echo -e "${color} Restarting Service ${coloroff}"
+    systemctl enable ${component} &>>$log_file
+    systemctl restart ${component} &>>$log_file
+
   echo -e "${color} Removing Default Content ${coloroff}"
   rm -rf /usr/share/${component}/html/* >>$log_file
 
@@ -19,7 +23,6 @@ install_nginx(){
   cp /root/gitshell/roboshop.conf /etc/${component}/default.d/roboshop.conf
 
   echo -e "${color} Restarting Service ${coloroff}"
-  systemctl enable ${component} &>>$log_file
   systemctl restart ${component} &>>$log_file
 }
 
